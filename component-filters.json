@@ -15,7 +15,10 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "asset-gallery",
+      "card-reveal-hero",
+      "demo-control-panel"
     ]
   },
   {

@@ -1,0 +1,12 @@
+{
+  "assets": [
+    { "path": "/content/dam/mermaidrdetools/demo/photo-1.jpg", "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400", "title": "Mountain", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-2.jpg", "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400", "title": "Forest", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-3.jpg", "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400", "title": "Desert", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-4.jpg", "url": "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=400", "title": "Dog", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-5.jpg", "url": "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=400", "title": "Ocean", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-6.jpg", "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400", "title": "Sunrise", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-7.jpg", "url": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=400", "title": "Landscape", "mimeType": "image/jpeg" },
+    { "path": "/content/dam/mermaidrdetools/demo/photo-8.jpg", "url": "https://images.unsplash.com/photo-1439853949212-36589f9f4d4f?w=400", "title": "Cliff", "mimeType": "image/jpeg" }
+  ]
+}

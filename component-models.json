@@ -1,5 +1,45 @@
 [
   {
+    "id": "asset-gallery",
+    "fields": [
+      { "component": "aem-content", "name": "damFolder", "label": "DAM Folder", "valueType": "string" },
+      {
+        "component": "select", "name": "defaultEffect", "label": "Default Effect", "valueType": "string",
+        "options": [
+          { "name": "Original",    "value": "none" },
+          { "name": "Negative",    "value": "negative" },
+          { "name": "Polaroid",    "value": "polaroid" },
+          { "name": "Filmstrip",   "value": "filmstrip" },
+          { "name": "Hi-Contrast", "value": "hi-contrast" },
+          { "name": "Fisheye",     "value": "fisheye" },
+          { "name": "Glass Ball",  "value": "glass-ball" }
+        ]
+      },
+      { "component": "number", "name": "columns", "label": "Grid Columns", "valueType": "number", "min": 2, "max": 6 }
+    ]
+  },
+  {
+    "id": "card-reveal-hero",
+    "fields": [
+      {
+        "component": "select", "name": "tabStyle", "label": "Tab Style", "valueType": "string",
+        "options": [
+          { "name": "Pill (Experian-style)", "value": "pill" },
+          { "name": "Underline",             "value": "underline" },
+          { "name": "Card",                  "value": "card" }
+        ]
+      },
+      { "component": "number", "name": "defaultTab", "label": "Default Tab Index", "valueType": "number", "min": 0 }
+    ]
+  },
+  {
+    "id": "demo-control-panel",
+    "fields": [
+      { "component": "number",  "name": "stepInterval", "label": "Step Interval (ms)", "valueType": "number", "min": 200, "max": 5000 },
+      { "component": "boolean", "name": "enableSpeech",  "label": "Enable TTS Narration", "valueType": "boolean" }
+    ]
+  },
+  {
     "id": "page-metadata",
     "fields": [
       {

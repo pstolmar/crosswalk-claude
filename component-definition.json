@@ -1,6 +1,58 @@
 {
   "groups": [
     {
+      "title": "Mermaid Demo",
+      "id": "mermaid-demo",
+      "components": [
+        {
+          "title": "Asset Gallery",
+          "id": "asset-gallery",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "mermaidrdetools/components/asset-gallery",
+                "template": {
+                  "damFolder": "/content/dam/mermaidrdetools/demo",
+                  "defaultEffect": "none",
+                  "columns": 4
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Card Reveal Hero",
+          "id": "card-reveal-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "mermaidrdetools/components/card-reveal-hero",
+                "template": {
+                  "tabStyle": "pill",
+                  "defaultTab": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Demo Control Panel",
+          "id": "demo-control-panel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "mermaidrdetools/components/demo-control-panel",
+                "template": {
+                  "stepInterval": 900,
+                  "enableSpeech": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "title": "Default Content",
       "id": "default",
       "components": [
