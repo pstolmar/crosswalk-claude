@@ -3,12 +3,12 @@
 const BADGE_COLORS = [
   { bg: 'rgba(79,110,247,0.15)', border: '#4f6ef7', color: '#a5b4fc' },
   { bg: 'rgba(168,85,247,0.15)', border: '#a855f7', color: '#d8b4fe' },
-  { bg: 'rgba(234,179,8,0.15)',  border: '#eab308', color: '#fde047' },
+  { bg: 'rgba(234,179,8,0.15)', border: '#eab308', color: '#fde047' },
 ];
 
 export function parsePanelConfig(block) {
   const cells = [...block.children[0].children];
-  const raw = cells.map(c => c.textContent.trim());
+  const raw = cells.map((c) => c.textContent.trim());
   return {
     stepInterval: parseInt(raw[0], 10) || 900,
     enableSpeech: raw[1] === 'true',
@@ -17,15 +17,15 @@ export function parsePanelConfig(block) {
 
 export function parseScenarios(block) {
   const rows = [...block.children].slice(1);
-  return rows.map(row => {
+  return rows.map((row) => {
     const cells = [...row.children];
     const label = cells[0]?.textContent.trim() || 'Scenario';
-    const steps = cells.slice(1).map(c => c.textContent.trim()).filter(Boolean);
+    const steps = cells.slice(1).map((c) => c.textContent.trim()).filter(Boolean);
     return { label, steps };
   });
 }
 
-function buildHud(scenarios, config) {
+function buildHud(scenarios) {
   const hud = document.createElement('div');
   hud.className = 'dcp-hud';
 
@@ -51,7 +51,7 @@ function buildHud(scenarios, config) {
 
   const statusRow = document.createElement('div');
   statusRow.className = 'dcp-status';
-  statusRow.innerHTML = `<span class="dcp-pip"></span><span class="dcp-status__text">Click a scenario to run</span>`;
+  statusRow.innerHTML = '<span class="dcp-pip"></span><span class="dcp-status__text">Click a scenario to run</span>';
 
   const planBox = document.createElement('div');
   planBox.className = 'dcp-plan';
@@ -76,10 +76,15 @@ function buildHud(scenarios, config) {
   return hud;
 }
 
+function getStepState(i, doneCount, runningIndex) {
+  if (i < doneCount) return { state: 'done', icon: '✓' };
+  if (i === runningIndex) return { state: 'run', icon: '⟳' };
+  return { state: 'wait', icon: '◦' };
+}
+
 function renderPlan(planBox, steps, doneCount, runningIndex) {
   planBox.innerHTML = steps.map((step, i) => {
-    const state = i < doneCount ? 'done' : i === runningIndex ? 'run' : 'wait';
-    const icon  = i < doneCount ? '✓' : i === runningIndex ? '⟳' : '◦';
+    const { state, icon } = getStepState(i, doneCount, runningIndex);
     return `<div class="dcp-step dcp-step--${state}">
       <span class="dcp-step__dot"></span>
       <span class="dcp-step__text">${icon} ${step}</span>
@@ -102,7 +107,7 @@ function runScenario(scenario, planBox, statusText, pip, config) {
 
   let stepsDone = 0;
   const timer = setInterval(() => {
-    stepsDone++;
+    stepsDone += 1;
     if (stepsDone < steps.length) {
       renderPlan(planBox, steps, stepsDone, stepsDone);
     } else {
@@ -121,7 +126,7 @@ export default function decorate(block) {
   const config = parsePanelConfig(block);
   const scenarios = parseScenarios(block);
 
-  const hud = buildHud(scenarios, config);
+  const hud = buildHud(scenarios);
   document.body.appendChild(hud);
   block.innerHTML = '';
 
@@ -131,13 +136,14 @@ export default function decorate(block) {
 
   let activeTimer = null;
 
-  hud.querySelector('.dcp-badges').addEventListener('click', e => {
+  hud.querySelector('.dcp-badges').addEventListener('click', (e) => {
     const badge = e.target.closest('.dcp-badge');
     if (!badge) return;
     if (activeTimer) { clearInterval(activeTimer); activeTimer = null; }
-    hud.querySelectorAll('.dcp-badge').forEach(b => b.classList.remove('dcp-badge--running'));
+    hud.querySelectorAll('.dcp-badge').forEach((b) => b.classList.remove('dcp-badge--running'));
     badge.classList.add('dcp-badge--running');
-    activeTimer = runScenario(scenarios[parseInt(badge.dataset.index, 10)], planBox, statusText, pip, config);
+    const scenarioIndex = parseInt(badge.dataset.index, 10);
+    activeTimer = runScenario(scenarios[scenarioIndex], planBox, statusText, pip, config);
   });
 
   hud.querySelector('.dcp-dev-toggle').addEventListener('click', () => {
@@ -147,7 +153,7 @@ export default function decorate(block) {
 
   hud.querySelector('.dcp-reset').addEventListener('click', () => {
     if (activeTimer) { clearInterval(activeTimer); activeTimer = null; }
-    hud.querySelectorAll('.dcp-badge').forEach(b => b.classList.remove('dcp-badge--running'));
+    hud.querySelectorAll('.dcp-badge').forEach((b) => b.classList.remove('dcp-badge--running'));
     pip.classList.remove('dcp-pip--live');
     statusText.textContent = 'Click a scenario to run';
     planBox.innerHTML = '<div class="dcp-plan__empty">—</div>';
@@ -158,16 +164,17 @@ export default function decorate(block) {
     hud.classList.toggle('dcp-hud--minimized');
   });
 
-  let dragging = false, ox = 0, oy = 0;
-  hud.querySelector('.dcp-hud__header').addEventListener('mousedown', e => {
+  let dragging = false; let ox = 0; let
+    oy = 0;
+  hud.querySelector('.dcp-hud__header').addEventListener('mousedown', (e) => {
     dragging = true;
     ox = e.clientX - hud.getBoundingClientRect().left;
     oy = e.clientY - hud.getBoundingClientRect().top;
   });
-  document.addEventListener('mousemove', e => {
+  document.addEventListener('mousemove', (e) => {
     if (!dragging) return;
-    hud.style.left = (e.clientX - ox) + 'px';
-    hud.style.top  = (e.clientY - oy) + 'px';
+    hud.style.left = `${e.clientX - ox}px`;
+    hud.style.top = `${e.clientY - oy}px`;
     hud.style.right = 'auto'; hud.style.bottom = 'auto';
   });
   document.addEventListener('mouseup', () => { dragging = false; });

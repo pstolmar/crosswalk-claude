@@ -18,5 +18,17 @@ module.exports = {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
+    'xwalk/no-custom-resource-types': 'off', // custom resource types required for mermaidrdetools components
   },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      env: {
+        jest: true,
+      },
+      rules: {
+        'import/no-unresolved': 'off',
+      },
+    },
+  ],
 };

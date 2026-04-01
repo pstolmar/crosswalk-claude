@@ -4,11 +4,11 @@ import decorate, { parseScenarios, parsePanelConfig } from './demo-control-panel
 function makeBlock(configRow, ...scenarioRows) {
   const block = document.createElement('div');
   const cfg = document.createElement('div');
-  cfg.innerHTML = configRow.map(c => `<div>${c}</div>`).join('');
+  cfg.innerHTML = configRow.map((c) => `<div>${c}</div>`).join('');
   block.appendChild(cfg);
-  scenarioRows.forEach(row => {
+  scenarioRows.forEach((row) => {
     const div = document.createElement('div');
-    div.innerHTML = row.map(c => `<div>${c}</div>`).join('');
+    div.innerHTML = row.map((c) => `<div>${c}</div>`).join('');
     block.appendChild(div);
   });
   return block;
@@ -48,7 +48,7 @@ describe('parseScenarios', () => {
 
 describe('decorate', () => {
   afterEach(() => {
-    document.querySelectorAll('.dcp-hud').forEach(el => el.remove());
+    document.querySelectorAll('.dcp-hud').forEach((el) => el.remove());
   });
 
   it('appends floating HUD to document body', () => {

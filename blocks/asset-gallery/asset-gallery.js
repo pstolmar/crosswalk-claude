@@ -1,26 +1,29 @@
 // blocks/asset-gallery/asset-gallery.js
-import { fireSparkler } from '../shared/fx-canvas.js';
 
 export const FILTERS = {
-  'none':        '',
-  'negative':    'invert(1) hue-rotate(180deg)',
-  'polaroid':    'sepia(0.4) saturate(0.8) brightness(1.15) contrast(0.9)',
-  'filmstrip':   'saturate(0.3) contrast(1.4) brightness(0.85) sepia(0.3)',
+  none: '',
+  negative: 'invert(1) hue-rotate(180deg)',
+  polaroid: 'sepia(0.4) saturate(0.8) brightness(1.15) contrast(0.9)',
+  filmstrip: 'saturate(0.3) contrast(1.4) brightness(0.85) sepia(0.3)',
   'hi-contrast': 'saturate(0) contrast(2.5) brightness(0.9)',
-  'fisheye':     'saturate(1.8) contrast(1.3) brightness(1.1) hue-rotate(15deg)',
-  'glass-ball':  'brightness(1.4) saturate(0.6) contrast(1.2)',
+  fisheye: 'saturate(1.8) contrast(1.3) brightness(1.1) hue-rotate(15deg)',
+  'glass-ball': 'brightness(1.4) saturate(0.6) contrast(1.2)',
 };
 
 const EFFECT_LABELS = {
-  'none': 'Original', 'negative': 'Negative', 'polaroid': 'Polaroid',
-  'filmstrip': 'Filmstrip', 'hi-contrast': 'Hi-Contrast',
-  'fisheye': 'Fisheye', 'glass-ball': 'Glass Ball',
+  none: 'Original',
+  negative: 'Negative',
+  polaroid: 'Polaroid',
+  filmstrip: 'Filmstrip',
+  'hi-contrast': 'Hi-Contrast',
+  fisheye: 'Fisheye',
+  'glass-ball': 'Glass Ball',
 };
 
 export function parseConfig(block) {
   const cells = [...block.querySelectorAll(':scope > div:first-child > div')];
-  const raw = cells.map(c => c.textContent.trim());
-  const effect = FILTERS.hasOwnProperty(raw[1]) ? raw[1] : 'none';
+  const raw = cells.map((c) => c.textContent.trim());
+  const effect = Object.prototype.hasOwnProperty.call(FILTERS, raw[1]) ? raw[1] : 'none';
   return {
     damFolder: raw[0] || '/content/dam/mermaidrdetools/demo',
     defaultEffect: effect,
@@ -31,9 +34,9 @@ export function parseConfig(block) {
 export function buildEffectStrip(activeEffect) {
   const strip = document.createElement('div');
   strip.className = 'ag-effect-strip';
-  Object.keys(FILTERS).forEach(key => {
+  Object.keys(FILTERS).forEach((key) => {
     const pill = document.createElement('button');
-    pill.className = 'ag-effect-pill' + (key === activeEffect ? ' ag-effect-pill--active' : '');
+    pill.className = `ag-effect-pill${key === activeEffect ? ' ag-effect-pill--active' : ''}`;
     pill.dataset.effect = key;
     pill.textContent = EFFECT_LABELS[key];
     strip.appendChild(pill);
@@ -57,7 +60,7 @@ function buildGrid(assets, columns) {
   const grid = document.createElement('div');
   grid.className = 'ag-grid';
   grid.style.setProperty('--ag-columns', columns);
-  assets.forEach(asset => {
+  assets.forEach((asset) => {
     const item = document.createElement('div');
     item.className = 'ag-item';
     item.dataset.path = asset.path;
@@ -75,19 +78,17 @@ function buildJourneyDrawer(asset) {
   const drawer = document.createElement('div');
   drawer.className = 'ag-journey';
   const steps = [
-    { label: 'I/O Upload',     state: 'done' },
-    { label: 'nt:file',        state: 'done' },
-    { label: 'dam:Asset ✓',    state: 'active' },
-    { label: 'Effects',        state: 'pending' },
-    { label: 'EDS Publish',    state: 'pending' },
+    { label: 'I/O Upload', state: 'done' },
+    { label: 'nt:file', state: 'done' },
+    { label: 'dam:Asset ✓', state: 'active' },
+    { label: 'Effects', state: 'pending' },
+    { label: 'EDS Publish', state: 'pending' },
   ];
   drawer.innerHTML = `<p class="ag-journey__title">Asset Journey</p>
     <nav class="ag-journey__steps">${
-      steps.map((s, i) =>
-        `<span class="ag-journey__step ag-journey__step--${s.state}">${s.label}</span>`
-        + (i < steps.length - 1 ? '<span class="ag-journey__arrow">→</span>' : '')
-      ).join('')
-    }</nav>
+  steps.map((s, i) => `<span class="ag-journey__step ag-journey__step--${s.state}">${s.label}</span>${
+    i < steps.length - 1 ? '<span class="ag-journey__arrow">→</span>' : ''}`).join('')
+}</nav>
     <footer class="ag-journey__meta">
       <code>${asset?.path || ''}</code>
     </footer>`;
@@ -133,17 +134,17 @@ export default async function decorate(block) {
   block.append(header, strip, grid, journey, devHud, hudToggle);
 
   // Wire effect strip
-  strip.addEventListener('click', e => {
+  strip.addEventListener('click', (e) => {
     const pill = e.target.closest('.ag-effect-pill');
     if (!pill) return;
-    strip.querySelectorAll('.ag-effect-pill').forEach(p => p.classList.remove('ag-effect-pill--active'));
+    strip.querySelectorAll('.ag-effect-pill').forEach((p) => p.classList.remove('ag-effect-pill--active'));
     pill.classList.add('ag-effect-pill--active');
     const filterVal = FILTERS[pill.dataset.effect] || '';
-    grid.querySelectorAll('.ag-item img').forEach(img => img.style.filter = filterVal);
+    grid.querySelectorAll('.ag-item img').forEach((img) => { img.style.filter = filterVal; });
   });
 
   // Wire image click → journey drawer
-  grid.addEventListener('click', e => {
+  grid.addEventListener('click', (e) => {
     const item = e.target.closest('.ag-item');
     if (!item) return;
     const wasOpen = !journey.classList.contains('ag-journey--hidden')

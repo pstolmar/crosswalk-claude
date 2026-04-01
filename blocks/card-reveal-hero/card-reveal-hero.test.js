@@ -4,11 +4,11 @@ import decorate, { parseTabs, parseHeroConfig, ANIMATION_PRESETS } from './card-
 function makeBlock(configRow, ...tabRows) {
   const block = document.createElement('div');
   const configDiv = document.createElement('div');
-  configDiv.innerHTML = configRow.map(c => `<div>${c}</div>`).join('');
+  configDiv.innerHTML = configRow.map((c) => `<div>${c}</div>`).join('');
   block.appendChild(configDiv);
-  tabRows.forEach(row => {
+  tabRows.forEach((row) => {
     const div = document.createElement('div');
-    div.innerHTML = row.map(c => `<div>${c}</div>`).join('');
+    div.innerHTML = row.map((c) => `<div>${c}</div>`).join('');
     block.appendChild(div);
   });
   return block;
@@ -43,23 +43,23 @@ describe('parseTabs', () => {
   });
 
   it('defaults animationPreset to bounce if unrecognised', () => {
-    const block = makeBlock(['pill','0'], ['🎯','Assets','H','B','CTA','','','bogus','none']);
+    const block = makeBlock(['pill', '0'], ['🎯', 'Assets', 'H', 'B', 'CTA', '', '', 'bogus', 'none']);
     expect(parseTabs(block)[0].animationPreset).toBe('bounce');
   });
 });
 
 describe('ANIMATION_PRESETS', () => {
   it('has entries for bounce, slide-right, drop-camera, flip', () => {
-    ['bounce','slide-right','drop-camera','flip'].forEach(k => expect(ANIMATION_PRESETS).toHaveProperty(k));
+    ['bounce', 'slide-right', 'drop-camera', 'flip'].forEach((k) => expect(ANIMATION_PRESETS).toHaveProperty(k));
   });
 });
 
 describe('decorate', () => {
   it('renders one .crh-tab per parsed tab', () => {
     const block = makeBlock(
-      ['pill','0'],
-      ['🎯','Assets','H1','B1','CTA1','','','bounce','sparkler'],
-      ['💳','Approval','H2','B2','CTA2','','','bounce','confetti'],
+      ['pill', '0'],
+      ['🎯', 'Assets', 'H1', 'B1', 'CTA1', '', '', 'bounce', 'sparkler'],
+      ['💳', 'Approval', 'H2', 'B2', 'CTA2', '', '', 'bounce', 'confetti'],
     );
     decorate(block);
     expect(block.querySelectorAll('.crh-tab').length).toBe(2);
@@ -67,8 +67,8 @@ describe('decorate', () => {
 
   it('first tab is active on render', () => {
     const block = makeBlock(
-      ['pill','0'],
-      ['🎯','Assets','H','B','CTA','','','bounce','none'],
+      ['pill', '0'],
+      ['🎯', 'Assets', 'H', 'B', 'CTA', '', '', 'bounce', 'none'],
     );
     decorate(block);
     expect(block.querySelector('.crh-tab--active')).not.toBeNull();
@@ -76,9 +76,9 @@ describe('decorate', () => {
 
   it('clicking a tab updates active class and heading text', () => {
     const block = makeBlock(
-      ['pill','0'],
-      ['🎯','Assets','Heading A','Body A','CTA A','','','bounce','none'],
-      ['💳','Approval','Heading B','Body B','CTA B','','','bounce','none'],
+      ['pill', '0'],
+      ['🎯', 'Assets', 'Heading A', 'Body A', 'CTA A', '', '', 'bounce', 'none'],
+      ['💳', 'Approval', 'Heading B', 'Body B', 'CTA B', '', '', 'bounce', 'none'],
     );
     decorate(block);
     const tabs = block.querySelectorAll('.crh-tab');

@@ -61,11 +61,13 @@
   background: #374151; flex-shrink: 0;
   transition: background 0.3s;
 }
+
 .dcp-pip--live {
   background: #4f6ef7;
   box-shadow: 0 0 6px #4f6ef7;
   animation: dcpPipPulse 1s infinite;
 }
+
 @keyframes dcpPipPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 .dcp-status__text { font-size: 0.68rem; color: #475569; }
