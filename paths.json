@@ -1,8 +1,8 @@
 {
   "mappings": [
-    "/content/mermaidrdetools/us/en/:/"
+    "/content/mermaidrdetools/pstolmar/crosswalk-claude/main/:/"
   ],
   "includes": [
-    "/content/mermaidrdetools/us/en/"
+    "/content/mermaidrdetools/pstolmar/crosswalk-claude/main/"
   ]
 }
